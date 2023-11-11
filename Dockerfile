@@ -13,4 +13,5 @@ WORKDIR /app/cmd/api
 RUN go build -o /url-shortener
 
 EXPOSE 8080
+
 CMD [ "/url-shortener" ]

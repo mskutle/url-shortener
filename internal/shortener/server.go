@@ -28,8 +28,8 @@ func (s *Server) Start() error {
 	app.Use(middleware.Logger())
 	app.Use(middleware.Recover())
 
-	app.GET("/healthz", s.healthCheck)
-	app.GET("/r/:alias", s.redirect)
+	app.GET("/healthz", s.handleHealthz)
+	app.GET("/r/:alias", s.handleRedirect)
 	app.POST("/redirects", s.handleAddRedirect, middleware.BasicAuth(s.validateUser))
 
 	return app.Start(s.config.port)

@@ -7,7 +7,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func (s *Server) healthCheck(c echo.Context) error {
+func (s *Server) handleHealthz(c echo.Context) error {
 	return c.String(http.StatusOK, "")
 }
 
@@ -39,7 +39,7 @@ func (s *Server) handleAddRedirect(c echo.Context) error {
 	return c.JSON(http.StatusCreated, redirect)
 }
 
-func (s *Server) redirect(c echo.Context) error {
+func (s *Server) handleRedirect(c echo.Context) error {
 	alias := c.Param("alias")
 
 	url, err := s.store.Get(alias)

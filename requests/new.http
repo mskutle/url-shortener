@@ -1,5 +1,6 @@
-POST http://localhost:3000
+POST http://localhost:3000/redirects
 Content-Type: application/json
+Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM0
 
 {
   "original": "https://www.vg.no",

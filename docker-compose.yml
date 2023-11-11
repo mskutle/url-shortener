@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  url-shortener:
+    env_file: .env
+    container_name: url-shortener
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app

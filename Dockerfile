@@ -12,5 +12,5 @@ COPY . .
 WORKDIR /app/cmd/api
 RUN go build -o /url-shortener
 
-EXPOSE 3000
+EXPOSE 8080
 CMD [ "/url-shortener" ]

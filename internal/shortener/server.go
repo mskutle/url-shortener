@@ -8,16 +8,14 @@ import (
 )
 
 type Server struct {
-	port   string
 	store  Store
 	logger *slog.Logger
 	config ServerConfig
 }
 
-func NewServer(port string, store Store) Server {
+func NewServer(store Store) Server {
 	logger := slog.Default()
 	return Server{
-		port:   port,
 		store:  store,
 		logger: logger,
 		config: NewServerConfig(logger),
@@ -34,5 +32,5 @@ func (s *Server) Start() error {
 	app.GET("/r/:alias", s.redirect)
 	app.POST("/redirects", s.handleAddRedirect, middleware.BasicAuth(s.validateUser))
 
-	return app.Start(s.port)
+	return app.Start(s.config.port)
 }

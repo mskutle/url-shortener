@@ -6,7 +6,7 @@ import (
 
 func (s *Server) validateUser(username, password string, c echo.Context) (bool, error) {
 
-	if username == s.config.AdminUsername && password == s.config.AdminPassword {
+	if username == s.config.adminUsername && password == s.config.adminPassword {
 		return true, nil
 	}
 

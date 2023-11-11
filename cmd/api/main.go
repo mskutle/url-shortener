@@ -8,7 +8,7 @@ import (
 
 func main() {
 	store := shortener.NewInMemoryStore()
-	server := shortener.NewServer(":3000", store)
+	server := shortener.NewServer(store)
 
 	log.Fatal(server.Start())
 }

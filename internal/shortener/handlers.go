@@ -28,11 +28,12 @@ func (s *Server) handleAddRedirect(c echo.Context) error {
 		Alias:    req.Alias,
 	}
 
-	err := s.store.Save(redirect)
+	err := s.store.Save(c.Request().Context(), redirect)
 	if err != nil {
 		if errors.Is(err, ErrAlreadyExists) {
 			return c.String(http.StatusConflict, err.Error())
 		}
+		s.logger.Error("something went wrong when trying to save a new redirect", err)
 		return c.String(http.StatusInternalServerError, "something went wrong")
 	}
 
@@ -42,7 +43,7 @@ func (s *Server) handleAddRedirect(c echo.Context) error {
 func (s *Server) handleRedirect(c echo.Context) error {
 	alias := c.Param("alias")
 
-	url, err := s.store.Get(alias)
+	url, err := s.store.Get(c.Request().Context(), alias)
 	if err != nil {
 		if errors.Is(err, ErrNotFound) {
 			return c.String(http.StatusNotFound, "")

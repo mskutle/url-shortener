@@ -1,6 +1,7 @@
 package shortener
 
 import (
+	"context"
 	"errors"
 	"sync"
 )
@@ -11,9 +12,9 @@ var (
 )
 
 type Store interface {
-	Save(redirect Redirect) error
-	Get(alias string) (Redirect, error)
-	GetAll() ([]Redirect, error)
+	Save(ctx context.Context, redirect Redirect) error
+	Get(ctx context.Context, alias string) (Redirect, error)
+	GetAll(ctx context.Context) ([]Redirect, error)
 }
 
 type InMemoryStore struct {
@@ -27,7 +28,7 @@ func NewInMemoryStore() *InMemoryStore {
 	}
 }
 
-func (s *InMemoryStore) GetAll() ([]Redirect, error) {
+func (s *InMemoryStore) GetAll(ctx context.Context) ([]Redirect, error) {
 	redirects := []Redirect{}
 	for _, redirect := range s.redirects {
 		redirects = append(redirects, redirect)
@@ -35,7 +36,7 @@ func (s *InMemoryStore) GetAll() ([]Redirect, error) {
 	return redirects, nil
 }
 
-func (s *InMemoryStore) Save(redirect Redirect) error {
+func (s *InMemoryStore) Save(ctx context.Context, redirect Redirect) error {
 	if _, found := s.redirects[redirect.Alias]; found {
 		return ErrAlreadyExists
 	}
@@ -47,7 +48,7 @@ func (s *InMemoryStore) Save(redirect Redirect) error {
 	return nil
 }
 
-func (s *InMemoryStore) Get(alias string) (Redirect, error) {
+func (s *InMemoryStore) Get(ctx context.Context, alias string) (Redirect, error) {
 	url, ok := s.redirects[alias]
 	if !ok {
 		return Redirect{}, ErrNotFound

@@ -1,3 +1,5 @@
 Dockerfile
 docker-compose.yml
 requests/
+.vscode/
+.zed/

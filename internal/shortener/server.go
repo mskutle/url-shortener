@@ -30,7 +30,7 @@ func (s *Server) Start() error {
 
 	app.GET("/healthz", s.handleHealthz)
 	app.GET("/r/:alias", s.handleRedirect)
-	app.POST("/redirects", s.handleAddRedirect, middleware.BasicAuth(s.validateUser))
+	app.POST("/redirects", s.handleAddRedirect)
 
 	return app.Start(s.config.port)
 }

@@ -17,6 +17,10 @@ func NewServerConfig(logger *slog.Logger) ServerConfig {
 	adminPassword := os.Getenv("ADMIN_PASSWORD")
 	port := os.Getenv("PORT")
 
+	if port == "" {
+		port = "8080"
+	}
+
 	return ServerConfig{
 		adminUsername: adminUser,
 		adminPassword: adminPassword,
